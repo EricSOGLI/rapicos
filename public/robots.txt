@@ -1,0 +1,16 @@
+# robots.txt for rapicredito.com
+User-agent: *
+Allow: /
+Allow: /blog
+Allow: /prestamos
+Allow: /simulador
+Allow: /politica-de-privacidad
+Allow: /terminos-y-condiciones
+Allow: /informacion-legal
+Disallow: /app/
+Disallow: /admin/
+Disallow: /admin-login
+Disallow: /forgot-password
+Disallow: /register
+
+Sitemap: https://rapicredito.com/sitemap.xml

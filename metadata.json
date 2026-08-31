@@ -1,0 +1,6 @@
+{
+  "name": "RapiCredito",
+  "description": "Plataforma fintech moderna para préstamos online rápidos. Simulador intuitivo, aprobación veloz y portal de clientes seguro.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
