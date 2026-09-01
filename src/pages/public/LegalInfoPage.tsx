@@ -28,15 +28,15 @@ export function LegalInfoPage() {
           <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-slate-600 font-medium">
             <div className="space-y-2">
               <p><strong className="text-slate-800">Denominación social:</strong> RapiCredito Finanzas S.L.</p>
-              <p><strong className="text-slate-800">Sitio Web:</strong> rapicredito.com</p>
+              <p><strong className="text-slate-800">Sitio Web:</strong> rapicreditofinance.com</p>
               <p><strong className="text-slate-800">Dirección fiscal:</strong> Paseo de la Castellana 95, Madrid, España</p>
               <p><strong className="text-slate-800">NIF / NIF-IVA:</strong> ESB-88123456</p>
             </div>
             <div className="space-y-2">
               <p><strong className="text-slate-800">Registro mercantil:</strong> Registro Mercantil de Madrid, Tomo 34500, Folio 12</p>
-              <p><strong className="text-slate-800">Contacto general:</strong> contacto@rapicredito.com</p>
-              <p><strong className="text-slate-800">Soporte al cliente:</strong> soporte@rapicredito.com</p>
-              <p><strong className="text-slate-800">Asuntos legales:</strong> legal@rapicredito.com</p>
+              <p><strong className="text-slate-800">Contacto general:</strong> contacto@rapicreditofinance.com</p>
+              <p><strong className="text-slate-800">Soporte al cliente:</strong> contacto@rapicreditofinance.com</p>
+              <p><strong className="text-slate-800">Asuntos legales:</strong> contacto@rapicreditofinance.com</p>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ export function LegalInfoPage() {
             Los usuarios pueden presentar consultas, sugerencias o reclamaciones a través de los siguientes canales:
           </p>
           <ul className="list-disc pl-5 space-y-2 text-xs font-medium text-slate-550">
-            <li>Correo electrónico: <strong className="text-slate-800">soporte@rapicredito.com</strong></li>
+            <li>Correo electrónico: <strong className="text-slate-800">contacto@rapicreditofinance.com</strong></li>
             <li>Dirección postal: <strong className="text-slate-800">RapiCredito Finanzas S.L., Paseo de la Castellana 95, Madrid</strong></li>
           </ul>
           <p className="text-xs text-slate-500">

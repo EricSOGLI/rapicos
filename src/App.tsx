@@ -145,7 +145,7 @@ function LoginPage({ setUser, isAdminForm = false }: { setUser: (u: SessionUser 
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="cliente@rapicredito.com"
+              placeholder="cliente@rapicreditofinance.com"
               className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
@@ -308,7 +308,7 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="cliente@rapicredito.com"
+              placeholder="cliente@rapicreditofinance.com"
               className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
@@ -494,7 +494,7 @@ function ForgotPasswordPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="cliente@rapicredito.com"
+                placeholder="cliente@rapicreditofinance.com"
                 className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
               />
             </div>

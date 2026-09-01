@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 export function AdminParameters() {
   const [siteName, setSiteName] = useState('RapiCredito Financial Services');
-  const [email, setEmail] = useState('soporte@rapicredito.com');
+  const [email, setEmail] = useState('contacto@rapicreditofinance.com');
   const [interest, setInterest] = useState('3.25');
   const [message, setMessage] = useState('');
 

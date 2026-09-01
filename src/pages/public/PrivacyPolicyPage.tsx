@@ -154,7 +154,7 @@ export function PrivacyPolicyPage() {
           </p>
           <div className="flex items-center gap-2 bg-slate-50 px-4 py-3 rounded-xl border border-slate-100 w-fit">
             <Icon name="Mail" size={16} className="text-brand-600" />
-            <span className="font-bold text-slate-800 text-xs">legal@rapicredito.com</span>
+            <span className="font-bold text-slate-800 text-xs">contacto@rapicreditofinance.com</span>
           </div>
         </div>
       </div>

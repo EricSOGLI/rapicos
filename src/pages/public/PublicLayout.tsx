@@ -152,8 +152,8 @@ export function PublicLayout({ user, onLogout }: PublicLayoutProps) {
           <div>
             <h4 className="text-white font-semibold text-sm mb-4">Contacto & Soporte</h4>
             <p className="text-xs mb-1 font-bold text-slate-300">RapiCredito Financial Services S.A.</p>
-            <p className="text-xs text-slate-400 mb-1">soporte@rapicredito.com</p>
-            <p className="text-xs text-slate-400 mb-2">contacto@rapicredito.com</p>
+            <p className="text-xs text-slate-400 mb-1">contacto@rapicreditofinance.com</p>
+            <p className="text-xs text-slate-400 mb-2">contacto@rapicreditofinance.com</p>
             <p className="text-xs text-slate-500">Lun - Vie: 08:00 - 18:00 h</p>
           </div>
         </div>

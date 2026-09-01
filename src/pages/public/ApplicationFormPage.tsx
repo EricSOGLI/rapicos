@@ -431,7 +431,7 @@ export function ApplicationFormPage() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="cliente@rapicredito.com"
+                        placeholder="cliente@rapicreditofinance.com"
                         className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
                       />
                     </div>
