@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="rapicredito-bg" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4338ca"/>
+      <stop offset="0.5" stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="rapicredito-shine" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Squircle Base -->
+  <rect width="64" height="64" rx="18" fill="url(#rapicredito-bg)"/>
+  <rect width="64" height="64" rx="18" fill="url(#rapicredito-shine)"/>
+  
+  <!-- Geometric Logo Mark -->
+  <g transform="translate(8, 8) scale(1.5)">
+    <!-- Dynamic credit arch / upward path -->
+    <path
+      d="M8 22C8 16.4772 12.4772 12 18 12H24"
+      stroke="#ffffff"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Dynamic lightning / credit speed spark -->
+    <path
+      d="M20 7L25 12L20 17"
+      stroke="#ffffff"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Foundation point -->
+    <circle cx="9" cy="22" r="2.5" fill="#ffffff" />
+    <!-- Accent glow spark -->
+    <circle cx="21" cy="22" r="2.5" fill="#c7d2fe" />
+  </g>
+</svg>

@@ -772,6 +772,66 @@ const autoReplies = [
 ];
 
 export const dataService = {
+
+  // --- CONSULTATION LEADS (LEADS WEB) ---
+  getConsultationLeads(): ConsultationLead[] {
+    return memoryCache.consultationLeads.sort((a, b) => b.created_at.localeCompare(a.created_at));
+  },
+  createConsultationLead(lead: Omit<ConsultationLead, 'id' | 'status' | 'created_at'>): ConsultationLead {
+    const newLead: ConsultationLead = {
+      ...lead,
+      id: generateUUID(),
+      status: 'new',
+      created_at: new Date().toISOString()
+    };
+
+    if (supabase) {
+      supabase.from('consultation_leads').insert(newLead).then();
+    }
+
+    memoryCache.consultationLeads = [newLead, ...memoryCache.consultationLeads];
+
+    // Notification to admin
+    this.createNotification(
+      'user-admin-1',
+      'Nueva Consulta Web Recibida 🚀',
+      `${newLead.full_name} ha solicitado información para un préstamo (${newLead.loan_type}). Tel: ${newLead.phone}`,
+      'lead'
+    );
+
+    return newLead;
+  },
+  updateConsultationLeadStatus(id: string, status: ConsultationLeadStatus, notes?: string): ConsultationLead {
+    memoryCache.consultationLeads = memoryCache.consultationLeads.map(l => {
+      if (l.id === id) {
+        return {
+          ...l,
+          status,
+          notes: notes !== undefined ? notes : l.notes
+        };
+      }
+      return l;
+    });
+
+    const updated = memoryCache.consultationLeads.find(l => l.id === id)!;
+
+    if (supabase) {
+      supabase.from('consultation_leads').update({
+        status,
+        notes: updated.notes
+      }).eq('id', id).then();
+    }
+
+    return updated;
+  },
+  deleteConsultationLead(id: string): void {
+    memoryCache.consultationLeads = memoryCache.consultationLeads.filter(l => l.id !== id);
+
+    if (supabase) {
+      supabase.from('consultation_leads').delete().eq('id', id).then();
+    }
+  },
+
   // --- PROFILES ---
   getProfiles(): Profile[] {
     return memoryCache.profiles;

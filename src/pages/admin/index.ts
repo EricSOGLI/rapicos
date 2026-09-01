@@ -4,6 +4,7 @@
  */
 
 export * from './AdminDashboard';
+export * from './AdminConsultations';
 export * from './AdminLoanTypes';
 export * from './AdminLoanRequests';
 export * from './AdminUsersDirectory';

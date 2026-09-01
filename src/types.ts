@@ -62,6 +62,7 @@ export interface BankAccount {
   account_holder: string;
   iban: string;
   bank_name: string;
+  country?: string;
   is_verified: boolean;
   created_at: string;
 }
@@ -76,6 +77,7 @@ export interface Transaction {
   type: TransactionType;
   amount: number;
   status: TransactionStatus;
+  bank_details?: string;
   created_at: string;
 }
 
@@ -144,5 +146,18 @@ export interface ApprovedClientShowcase {
   photo_url: string;
   status: ShowcaseStatus;
   is_public: boolean;
+  created_at: string;
+}
+
+export type ConsultationLeadStatus = 'new' | 'contacted' | 'converted' | 'archived';
+
+export interface ConsultationLead {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  loan_type: string;
+  status: ConsultationLeadStatus;
+  notes?: string;
   created_at: string;
 }

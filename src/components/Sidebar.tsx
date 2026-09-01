@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { authService, SessionUser } from '../lib/supabase';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { dataService, SessionUser } from '../lib/supabase';
 import Icon from './Icons';
+import Logo from './Logo';
 
 interface SidebarProps {
   user: SessionUser;
@@ -17,8 +18,15 @@ interface SidebarProps {
 
 export default function Sidebar({ user, onLogout, isOpen = false, onClose }: SidebarProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const isAdmin = user.role === 'admin';
+  const [newLeadsCount, setNewLeadsCount] = useState(0);
+
+  useEffect(() => {
+    if (isAdmin) {
+      const leads = dataService.getConsultationLeads();
+      setNewLeadsCount(leads.filter(l => l.status === 'new').length);
+    }
+  }, [isAdmin]);
 
   const clientLinks = [
     { to: '/app/dashboard', label: 'Inicio', icon: 'LayoutDashboard' },
@@ -33,9 +41,10 @@ export default function Sidebar({ user, onLogout, isOpen = false, onClose }: Sid
 
   const adminLinks = [
     { to: '/admin/dashboard', label: 'Panel de Control', icon: 'LayoutDashboard' },
+    { to: '/admin/consultas', label: 'Consultas Web / Leads', icon: 'Users', badge: newLeadsCount },
     { to: '/admin/solicitudes', label: 'Solicitudes de Crédito', icon: 'FileText' },
-    { to: '/admin/usuarios', label: 'Usuarios', icon: 'Users' },
-    { to: '/admin/transacciones', label: 'Transacciones', icon: 'RefreshCw' },
+    { to: '/admin/usuarios', label: 'Usuarios', icon: 'UserCheck' },
+    { to: '/admin/transacciones', label: 'Transacciones & Retiros', icon: 'RefreshCw' },
     { to: '/admin/tipos-prestamos', label: 'Tipos de Préstamo', icon: 'Sliders' },
     { to: '/admin/blog', label: 'Gestión del Blog', icon: 'BookOpen' },
     { to: '/admin/mensajes', label: 'Atención al Cliente', icon: 'MessageSquare' },
@@ -68,18 +77,12 @@ export default function Sidebar({ user, onLogout, isOpen = false, onClose }: Sid
         }`}
       >
         {/* Brand logo */}
-        <div className="p-6 border-b border-slate-50 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-display font-bold text-lg shadow-sm shadow-brand-500/20">
-              R
-            </div>
-            <div>
-              <span className="font-display font-bold text-slate-800 text-base block tracking-tight">RapiCredito</span>
-              <span className="text-[10px] text-accent-600 font-semibold uppercase tracking-wider">
-                {isAdmin ? 'Panel de Administración' : 'Portal de Cliente'}
-              </span>
-            </div>
-          </div>
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between gap-3">
+          <Logo
+            size="md"
+            withLink={false}
+            subtitle={isAdmin ? 'Panel de Administración' : 'Portal de Cliente'}
+          />
           {/* Close button inside sidebar on mobile */}
           {onClose && (
             <button
@@ -92,18 +95,18 @@ export default function Sidebar({ user, onLogout, isOpen = false, onClose }: Sid
         </div>
 
         {/* User profile widget */}
-        <div className="px-4 py-4 border-b border-slate-50/60 bg-slate-50/30 flex items-center gap-3">
+        <div className="px-4 py-3.5 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
           <img
             src={user.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.full_name)}`}
             alt={user.full_name}
-            className="h-10 w-10 rounded-xl object-cover bg-brand-50"
+            className="h-10 w-10 rounded-2xl object-cover bg-indigo-50 border border-slate-200/60"
             referrerPolicy="no-referrer"
           />
           <div className="flex-1 min-w-0">
-            <span className="text-xs font-semibold text-slate-800 block truncate leading-tight">
+            <span className="text-xs font-bold text-slate-900 block truncate leading-tight">
               {user.full_name}
             </span>
-            <span className="text-[10px] text-slate-400 block truncate mt-0.5">
+            <span className="text-[10px] text-slate-400 block truncate mt-0.5 font-medium">
               {user.email}
             </span>
           </div>
@@ -117,29 +120,36 @@ export default function Sidebar({ user, onLogout, isOpen = false, onClose }: Sid
               to={link.to}
               onClick={handleLinkClick}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                `flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
                   isActive
-                    ? 'bg-brand-50 text-brand-600 shadow-sm shadow-brand-500/5 font-semibold'
-                    : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                    ? 'bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-500/10 font-bold border-l-2 border-indigo-600'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                 }`
               }
             >
-              <Icon name={link.icon} size={18} />
-              <span>{link.label}</span>
+              <div className="flex items-center gap-3">
+                <Icon name={link.icon} size={17} />
+                <span>{link.label}</span>
+              </div>
+              {'badge' in link && (link.badge as number) > 0 && (
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-500 text-white animate-pulse">
+                  {link.badge}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-slate-50 flex flex-col gap-2">
+        <div className="p-4 border-t border-slate-100 flex flex-col gap-1.5 bg-slate-50/30">
           <button
             onClick={() => {
               navigate('/');
               handleLinkClick();
             }}
-            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition-all duration-200"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-indigo-600 hover:bg-white transition-all duration-200"
           >
-            <Icon name="Home" size={16} />
+            <Icon name="Home" size={15} />
             <span>Sitio Público</span>
           </button>
           <button
@@ -147,9 +157,9 @@ export default function Sidebar({ user, onLogout, isOpen = false, onClose }: Sid
               onLogout();
               handleLinkClick();
             }}
-            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-rose-500 hover:text-rose-600 hover:bg-rose-50 transition-all duration-200"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 transition-all duration-200"
           >
-            <Icon name="LogOut" size={16} />
+            <Icon name="LogOut" size={15} />
             <span>Cerrar Sesión</span>
           </button>
         </div>

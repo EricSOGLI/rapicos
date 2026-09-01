@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate, Link } from 'react-router-dom';
 import { authService, dataService, realtimeService, initializeApplication, SessionUser } from './lib/supabase';
 import Icon from './components/Icons';
+import Logo from './components/Logo';
 
 // Public pages imports
 import {
@@ -41,6 +42,7 @@ import {
 // Admin pages imports
 import {
   AdminDashboard,
+  AdminConsultations,
   AdminLoanTypes,
   AdminLoanRequests,
   AdminUsersDirectory,
@@ -114,7 +116,7 @@ function LoginPage({ setUser, isAdminForm = false }: { setUser: (u: SessionUser 
       <div className="w-full max-w-md mb-4 flex justify-start">
         <Link 
           to="/" 
-          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 font-bold bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 font-bold bg-white border border-slate-200/80 rounded-xl px-4 py-2 shadow-xs transition-all"
         >
           <Icon name="ArrowLeft" size={14} />
           Volver al inicio
@@ -122,40 +124,37 @@ function LoginPage({ setUser, isAdminForm = false }: { setUser: (u: SessionUser 
       </div>
       <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-xl space-y-6">
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 font-display font-bold text-xl text-slate-900">
-            <span className="p-1.5 bg-brand-600 rounded-lg text-white">
-              <Icon name={isAdminForm ? 'Shield' : 'Briefcase'} size={18} />
-            </span>
-            RapiCredito
-          </Link>
-          <h1 className="font-display font-bold text-2xl text-slate-900 pt-3">
-            {isAdminForm ? 'Portal de Administración' : 'Bienvenido de nuevo'}
+          <div className="flex justify-center pb-2">
+            <Logo size="lg" to="/" />
+          </div>
+          <h1 className="font-display font-bold text-2xl text-slate-900 pt-2">
+            {isAdminForm ? 'Portal de Administración' : 'Bienvenido de Nuevo'}
           </h1>
           <p className="text-xs text-slate-400">
             {isAdminForm 
-              ? 'Inicia sesión para gestionar solicitudes y configuraciones.' 
-              : 'Inicia sesión para acceder a tu portal de usuario.'}
+              ? 'Inicia sesión para gestionar solicitudes, consultas y clientes.' 
+              : 'Inicia sesión para acceder a tus préstamos y transferencias.'}
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Correo electrónico</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Correo electrónico</label>
             <input
               type="text"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="cliente@rapicredito.com"
-              className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-bold text-slate-500 block">Contraseña</label>
+              <label className="text-xs font-bold text-slate-700 block">Contraseña</label>
               {!isAdminForm && (
-                <Link to="/forgot-password" className="text-[11px] text-brand-600 hover:text-brand-700 font-bold transition-colors">
+                <Link to="/forgot-password" className="text-[11px] text-indigo-600 hover:text-indigo-700 font-bold transition-colors">
                   ¿Olvidaste tu contraseña?
                 </Link>
               )}
@@ -167,7 +166,7 @@ function LoginPage({ setUser, isAdminForm = false }: { setUser: (u: SessionUser 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200/80 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
               />
               <button
                 type="button"
@@ -179,21 +178,21 @@ function LoginPage({ setUser, isAdminForm = false }: { setUser: (u: SessionUser 
             </div>
           </div>
 
-          {error && <p className="text-xs text-rose-500 font-semibold bg-rose-50 p-2 text-center rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-rose-600 font-semibold bg-rose-50 border border-rose-200 p-2.5 text-center rounded-xl">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary-green font-semibold py-3 rounded-xl text-xs transition-colors shadow-sm"
+            className="w-full btn-primary-purple font-bold py-3.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-500/20"
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
         </form>
 
         {!isAdminForm && (
           <div className="text-center text-xs text-slate-400 pt-2 space-y-1">
             <p>¿No tienes una cuenta de cliente?</p>
-            <Link to="/register" className="text-brand-600 hover:text-brand-700 font-bold block">
+            <Link to="/register" className="text-indigo-600 hover:text-indigo-700 font-bold block">
               Regístrate ahora gratis
             </Link>
           </div>
@@ -219,7 +218,6 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
     e.preventDefault();
     setError('');
 
-    // Email format regex validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Formato de correo electrónico no válido.');
@@ -263,7 +261,7 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
       <div className="w-full max-w-md mb-4 flex justify-start">
         <Link 
           to="/" 
-          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 font-bold bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 font-bold bg-white border border-slate-200/80 rounded-xl px-4 py-2 shadow-xs transition-all"
         >
           <Icon name="ArrowLeft" size={14} />
           Volver al inicio
@@ -271,55 +269,52 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
       </div>
       <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-xl space-y-6">
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 font-display font-bold text-xl text-slate-900">
-            <span className="p-1.5 bg-brand-600 rounded-lg text-white">
-              <Icon name="Briefcase" size={18} />
-            </span>
-            RapiCredito
-          </Link>
-          <h1 className="font-display font-bold text-2xl text-slate-900 pt-3">Crear una cuenta</h1>
-          <p className="text-xs text-slate-400">Regístrate para acceder al portal y solicitar tu préstamo.</p>
+          <div className="flex justify-center pb-2">
+            <Logo size="lg" to="/" />
+          </div>
+          <h1 className="font-display font-bold text-2xl text-slate-900 pt-2">Crear una Cuenta</h1>
+          <p className="text-xs text-slate-400">Regístrate en 1 minuto para solicitar y gestionar tus préstamos.</p>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Nombre y Apellidos</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Nombre y Apellidos</label>
             <input
               type="text"
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Juan Pérez"
-              className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Número de celular</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Número de Teléfono / Celular</label>
             <input
               type="text"
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+34 600 000 000"
-              className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Correo electrónico</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Correo electrónico</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="cliente@rapicredito.com"
-              className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+              className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Contraseña</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Contraseña</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -327,7 +322,7 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200/80 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
               />
               <button
                 type="button"
@@ -340,7 +335,7 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Confirmar contraseña</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1">Confirmar contraseña</label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
@@ -348,7 +343,7 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200/80 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
               />
               <button
                 type="button"
@@ -360,20 +355,20 @@ function RegisterPage({ setUser }: { setUser: (u: SessionUser | null) => void })
             </div>
           </div>
 
-          {error && <p className="text-xs text-rose-500 font-semibold bg-rose-50 p-2 text-center rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-rose-600 font-semibold bg-rose-50 border border-rose-200 p-2.5 text-center rounded-xl">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full btn-primary-green font-semibold py-3 rounded-xl text-xs transition-colors shadow-sm"
+            className="w-full btn-primary-purple font-bold py-3.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-500/20"
           >
-            {loading ? 'Creando cuenta...' : 'Finalizar registro'}
+            {loading ? 'Creando cuenta...' : 'Finalizar Registro'}
           </button>
         </form>
 
         <div className="text-center text-xs text-slate-400 pt-2">
           <p>¿Ya tienes una cuenta?</p>
-          <Link to="/login" className="text-brand-600 hover:text-brand-700 font-bold block mt-1">
+          <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-bold block mt-1">
             Inicia sesión aquí
           </Link>
         </div>
@@ -465,7 +460,7 @@ function ForgotPasswordPage() {
       <div className="w-full max-w-md mb-4 flex justify-start">
         <Link 
           to="/" 
-          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 font-bold bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 font-bold bg-white border border-slate-200/80 rounded-xl px-4 py-2 shadow-xs transition-all"
         >
           <Icon name="ArrowLeft" size={14} />
           Volver al inicio
@@ -473,16 +468,13 @@ function ForgotPasswordPage() {
       </div>
       <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-10 border border-slate-100 shadow-xl space-y-6">
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 font-display font-bold text-xl text-slate-900">
-            <span className="p-1.5 bg-brand-600 rounded-lg text-white">
-              <Icon name="Briefcase" size={18} />
-            </span>
-            RapiCredito
-          </Link>
-          <h1 className="font-display font-bold text-2xl text-slate-900 pt-3">
-            {step === 1 && '¿Olvidaste tu contraseña?'}
-            {step === 2 && 'Establece tu nueva contraseña'}
-            {step === 3 && '¡Contraseña actualizada!'}
+          <div className="flex justify-center pb-2">
+            <Logo size="lg" to="/" />
+          </div>
+          <h1 className="font-display font-bold text-2xl text-slate-900 pt-2">
+            {step === 1 && '¿Olvidaste tu Contraseña?'}
+            {step === 2 && 'Establece tu Nueva Contraseña'}
+            {step === 3 && '¡Contraseña Actualizada!'}
           </h1>
           <p className="text-xs text-slate-400">
             {step === 1 && 'Ingresa tu correo para recibir el código de recuperación.'}
@@ -491,31 +483,31 @@ function ForgotPasswordPage() {
           </p>
         </div>
 
-        {successMsg && <p className="text-xs text-emerald-600 font-semibold bg-emerald-50 p-3 text-center rounded-xl">{successMsg}</p>}
+        {successMsg && <p className="text-xs text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 p-3 text-center rounded-xl">{successMsg}</p>}
 
         {step === 1 && (
           <form onSubmit={handleRequestReset} className="space-y-4">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Correo electrónico</label>
+              <label className="text-xs font-bold text-slate-700 block mb-1">Correo electrónico</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="cliente@rapicredito.com"
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary-green font-semibold py-3 rounded-xl text-xs transition-colors shadow-sm"
+              className="w-full btn-primary-purple font-bold py-3.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-500/20"
             >
-              {loading ? 'Enviando...' : 'Enviar código de recuperación'}
+              {loading ? 'Enviando...' : 'Enviar Código de Recuperación'}
             </button>
             
-            <Link to="/login" className="text-xs text-slate-500 hover:text-brand-600 block text-center font-bold">
+            <Link to="/login" className="text-xs text-slate-500 hover:text-indigo-600 block text-center font-bold">
               Volver al inicio de sesión
             </Link>
           </form>
@@ -525,20 +517,20 @@ function ForgotPasswordPage() {
           <form onSubmit={handleResetSubmit} className="space-y-4">
             {!window.location.hash.includes('access_token=') && !window.location.hash.includes('type=recovery') && (
               <div>
-                <label className="text-xs font-bold text-slate-500 block mb-1">Código de verificación (Demo: 123456)</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Código de verificación (Demo: 123456)</label>
                 <input
                   type="text"
                   required
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="123456"
-                  className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500 text-center font-mono tracking-widest"
+                  className="w-full bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white text-center font-mono tracking-widest"
                 />
               </div>
             )}
 
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Nueva contraseña</label>
+              <label className="text-xs font-bold text-slate-700 block mb-1">Nueva contraseña</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -546,7 +538,7 @@ function ForgotPasswordPage() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-slate-50 border border-slate-100 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                  className="w-full bg-slate-50 border border-slate-200/80 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
                 />
                 <button
                   type="button"
@@ -559,7 +551,7 @@ function ForgotPasswordPage() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Confirmar contraseña</label>
+              <label className="text-xs font-bold text-slate-700 block mb-1">Confirmar contraseña</label>
               <div className="relative">
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -567,7 +559,7 @@ function ForgotPasswordPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-slate-50 border border-slate-100 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold focus:outline-none focus:border-brand-500"
+                  className="w-full bg-slate-50 border border-slate-200/80 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
                 />
                 <button
                   type="button"
@@ -579,14 +571,14 @@ function ForgotPasswordPage() {
               </div>
             </div>
 
-            {error && <p className="text-xs text-rose-500 font-semibold bg-rose-50 p-2 text-center rounded-lg">{error}</p>}
+            {error && <p className="text-xs text-rose-600 font-semibold bg-rose-50 border border-rose-200 p-2.5 text-center rounded-xl">{error}</p>}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary-green font-semibold py-3 rounded-xl text-xs transition-colors shadow-sm"
+              className="w-full btn-primary-purple font-bold py-3.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-indigo-500/20"
             >
-              {loading ? 'Guardando...' : 'Cambiar contraseña'}
+              {loading ? 'Guardando...' : 'Cambiar Contraseña'}
             </button>
           </form>
         )}
@@ -598,9 +590,9 @@ function ForgotPasswordPage() {
             </div>
             <button
               onClick={() => navigate('/login')}
-              className="w-full btn-primary-green font-semibold py-3 rounded-xl text-xs transition-colors shadow-sm"
+              className="w-full btn-primary-purple font-bold py-3 rounded-xl text-xs transition-colors shadow-sm"
             >
-              Iniciar sesión ahora
+              Iniciar Sesión Ahora
             </button>
           </div>
         )}
@@ -640,8 +632,8 @@ function SecureAppLayout({ user, handleLogout }: { user: SessionUser; handleLogo
       {popupAlert && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-100 shadow-2xl text-center space-y-6 animate-in zoom-in-95 duration-200">
-            <div className="h-16 w-16 bg-brand-50 text-brand-650 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
-              <Icon name="BellRing" size={32} className="text-brand-600 animate-bounce" />
+            <div className="h-16 w-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+              <Icon name="BellRing" size={32} className="text-indigo-600 animate-bounce" />
             </div>
             <div className="space-y-2">
               <h3 className="font-display font-bold text-lg text-slate-950">{popupAlert.title}</h3>
@@ -653,7 +645,7 @@ function SecureAppLayout({ user, handleLogout }: { user: SessionUser; handleLogo
                 setPopupAlert(null);
                 fetchBadges();
               }}
-              className="w-full btn-primary-green font-bold py-3 rounded-2xl text-xs transition-all shadow-sm"
+              className="w-full btn-primary-purple font-bold py-3.5 rounded-2xl text-xs transition-all shadow-sm"
             >
               Cerrar
             </button>
@@ -670,20 +662,17 @@ function SecureAppLayout({ user, handleLogout }: { user: SessionUser; handleLogo
         <header className="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 sticky top-0 z-20">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 md:hidden">
-              <span className="p-1 bg-brand-600 rounded text-white block">
-                <Icon name="Briefcase" size={14} />
-              </span>
-              <span className="font-display font-bold text-sm text-slate-900">RapiCredito</span>
+              <Logo size="sm" to="/app/dashboard" />
             </div>
           </div>
 
           <div className="hidden md:block">
-            <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">Área de cliente</span>
-            <span className="text-xs text-slate-500 font-semibold">{user.full_name} • {user.email}</span>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Área de Cliente</span>
+            <span className="text-xs text-slate-700 font-bold">{user.full_name} • {user.email}</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <Link to="/app/notificaciones" className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors">
+            <Link to="/app/notificaciones" className="relative p-2 text-slate-400 hover:text-indigo-600 transition-colors">
               <Icon name="Bell" size={18} />
               {unreadNotifications > 0 && (
                 <span className="absolute top-1.5 right-1.5 h-4 w-4 bg-rose-500 text-[9px] text-white font-bold rounded-full flex items-center justify-center">
@@ -694,7 +683,7 @@ function SecureAppLayout({ user, handleLogout }: { user: SessionUser; handleLogo
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1 border border-slate-100 hover:bg-slate-50 text-slate-500 font-bold px-2 sm:px-3 py-1.5 rounded-xl text-xs transition-colors"
+              className="flex items-center gap-1 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-2 sm:px-3 py-1.5 rounded-xl text-xs transition-colors"
             >
               <Icon name="LogOut" size={14} />
               <span className="hidden xs:inline">Cerrar sesión</span>
@@ -747,22 +736,19 @@ function SecureAdminLayout({ user, handleLogout }: { user: SessionUser; handleLo
               <Icon name="Menu" size={20} />
             </button>
             <div className="flex items-center gap-2 md:hidden">
-              <span className="p-1 bg-slate-900 rounded text-white block">
-                <Icon name="Briefcase" size={14} />
-              </span>
-              <span className="font-display font-bold text-sm text-slate-900">RapiCredito Admin</span>
+              <Logo size="sm" to="/admin/dashboard" />
             </div>
           </div>
 
           <div className="hidden md:block">
-            <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block">Panel de Administración</span>
-            <span className="text-xs text-slate-500 font-semibold">{user.full_name} • Sistema de control</span>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Panel de Administración</span>
+            <span className="text-xs text-slate-700 font-bold">{user.full_name} • Sistema Central</span>
           </div>
 
           <div className="flex items-center gap-4">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1 border border-slate-100 hover:bg-slate-50 text-slate-500 font-bold px-2 sm:px-3 py-1.5 rounded-xl text-xs transition-colors"
+              className="flex items-center gap-1 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-2 sm:px-3 py-1.5 rounded-xl text-xs transition-colors"
             >
               <Icon name="LogOut" size={14} />
               <span className="hidden xs:inline">Cerrar sesión</span>
@@ -774,6 +760,7 @@ function SecureAdminLayout({ user, handleLogout }: { user: SessionUser; handleLo
         <main className="p-4 sm:p-6 max-w-7xl w-full mx-auto flex-1 pb-10">
           <Routes>
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="consultas" element={<AdminConsultations />} />
             <Route path="tipos-prestamos" element={<AdminLoanTypes />} />
             <Route path="solicitudes" element={<AdminLoanRequests />} />
             <Route path="usuarios" element={<AdminUsersDirectory />} />
@@ -817,7 +804,7 @@ export default function App() {
   if (checking) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center font-sans">
-        <div className="animate-spin rounded-full h-10 w-10 border-4 border-brand-600 border-t-transparent"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-indigo-600 border-t-transparent"></div>
         <p className="text-xs text-slate-400 mt-4 font-semibold">Cargando plataforma RapiCredito...</p>
       </div>
     );
