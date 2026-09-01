@@ -131,10 +131,10 @@ export function LandingPage() {
                   <span className="text-sm font-semibold text-white/70">€</span>
                 </div>
                 <Link
-                  to="/solicitud/prestamo-personal"
+                  to="/simulador?tip=prestamo-personal&monto=15000&meses=24"
                   className="w-full text-center py-2.5 rounded-full bg-white text-[#4f46e5] font-bold text-xs shadow-sm hover:bg-slate-50 transition-colors"
                 >
-                  Solicitar Dinero
+                  Simular Préstamo
                 </Link>
               </div>
 
@@ -152,10 +152,10 @@ export function LandingPage() {
                   <span className="text-sm font-semibold text-white/70">€</span>
                 </div>
                 <Link
-                  to="/solicitud/microcredito-emergencia"
+                  to="/simulador?tip=microcredito-emergencia&monto=3000&meses=6"
                   className="w-full text-center py-2.5 rounded-full bg-amber-300 text-emerald-950 font-bold text-xs shadow-sm hover:bg-amber-200 transition-colors"
                 >
-                  Retirar en 15 min
+                  Simular Microcrédito
                 </Link>
               </div>
 
@@ -170,10 +170,10 @@ export function LandingPage() {
                   <span className="text-sm font-semibold text-white/70">€</span>
                 </div>
                 <Link
-                  to="/solicitud/prestamo-hogar"
+                  to="/simulador?tip=prestamo-hogar&monto=28500&meses=48"
                   className="w-full text-center py-2.5 rounded-full bg-white text-[#7c3aed] font-bold text-xs shadow-sm hover:bg-slate-50 transition-colors"
                 >
-                  Simular Cuota
+                  Simular Reforma
                 </Link>
               </div>
 
@@ -191,8 +191,8 @@ export function LandingPage() {
                   <Icon name="Eye" size={14} className="text-white/80" />
                 </div>
                 <span className="text-2xl font-display font-bold text-white">15.000 €</span>
-                <Link to="/solicitud/prestamo-personal" className="w-full text-center py-2 rounded-full bg-white text-[#4f46e5] font-bold text-[11px]">
-                  Solicitar Dinero
+                <Link to="/simulador?tip=prestamo-personal&monto=15000&meses=24" className="w-full text-center py-2 rounded-full bg-white text-[#4f46e5] font-bold text-[11px]">
+                  Simular Préstamo
                 </Link>
               </div>
 
@@ -206,8 +206,8 @@ export function LandingPage() {
                   <Icon name="Zap" size={14} className="text-amber-300" />
                 </div>
                 <span className="text-2xl font-display font-bold text-white">3.000 €</span>
-                <Link to="/solicitud/microcredito-emergencia" className="w-full text-center py-2 rounded-full bg-amber-300 text-emerald-950 font-bold text-[11px]">
-                  Retirar en 15 min
+                <Link to="/simulador?tip=microcredito-emergencia&monto=3000&meses=6" className="w-full text-center py-2 rounded-full bg-amber-300 text-emerald-950 font-bold text-[11px]">
+                  Simular Microcrédito
                 </Link>
               </div>
 
@@ -218,8 +218,8 @@ export function LandingPage() {
                   <Icon name="Home" size={14} className="text-white/80" />
                 </div>
                 <span className="text-2xl font-display font-bold text-white">28.500 €</span>
-                <Link to="/solicitud/prestamo-hogar" className="w-full text-center py-2 rounded-full bg-white text-[#7c3aed] font-bold text-[11px]">
-                  Simular Cuota
+                <Link to="/simulador?tip=prestamo-hogar&monto=28500&meses=48" className="w-full text-center py-2 rounded-full bg-white text-[#7c3aed] font-bold text-[11px]">
+                  Simular Reforma
                 </Link>
               </div>
 
@@ -468,7 +468,7 @@ export function LandingPage() {
                 </p>
               </div>
               <Link
-                to="/solicitud/microcredito-emergencia"
+                to="/simulador?tip=microcredito-emergencia"
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group"
               >
                 Saber más <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -487,7 +487,7 @@ export function LandingPage() {
                 </p>
               </div>
               <Link
-                to="/solicitud/prestamo-personal"
+                to="/simulador?tip=prestamo-personal"
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group"
               >
                 Saber más <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -506,7 +506,7 @@ export function LandingPage() {
                 </p>
               </div>
               <Link
-                to="/solicitud/prestamo-hogar"
+                to="/simulador?tip=prestamo-hogar"
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group"
               >
                 Saber más <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -525,7 +525,7 @@ export function LandingPage() {
                 </p>
               </div>
               <Link
-                to="/solicitud/prestamo-vehiculo"
+                to="/simulador?tip=prestamo-vehiculo"
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group"
               >
                 Saber más <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -1067,7 +1067,7 @@ export function LandingPage() {
                 Cerrar
               </button>
               <Link
-                to="/solicitud/prestamo-personal"
+                to="/simulador"
                 className="btn-primary-purple font-bold px-6 py-2.5 rounded-xl text-xs"
               >
                 Solicitar Préstamo Ahora →

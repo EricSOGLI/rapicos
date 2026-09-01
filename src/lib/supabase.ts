@@ -427,6 +427,7 @@ export const initializeApplication = async (): Promise<SessionUser | null> => {
     if (loanTypesRes.data && loanTypesRes.data.length > 0) memoryCache.loanTypes = loanTypesRes.data;
     if (blogPostsRes.data && blogPostsRes.data.length > 0) memoryCache.blogPosts = blogPostsRes.data;
     if (showcaseRes.data && showcaseRes.data.length > 0) memoryCache.approvedClientsShowcase = showcaseRes.data;
+    if (leadsPublicRes.data && leadsPublicRes.data.length > 0) memoryCache.consultationLeads = leadsPublicRes.data;
 
     // 2. Fetch auth session
     const { data: { session } } = await supabase.auth.getSession();
@@ -775,7 +776,7 @@ export const dataService = {
 
   // --- CONSULTATION LEADS (LEADS WEB) ---
   getConsultationLeads(): ConsultationLead[] {
-    return memoryCache.consultationLeads.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    return (memoryCache.consultationLeads || []).sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
   },
   createConsultationLead(lead: Omit<ConsultationLead, 'id' | 'status' | 'created_at'>): ConsultationLead {
     const newLead: ConsultationLead = {

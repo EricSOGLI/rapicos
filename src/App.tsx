@@ -757,7 +757,7 @@ function SecureAdminLayout({ user, handleLogout }: { user: SessionUser; handleLo
         </header>
 
         {/* Secure page contents */}
-        <main className="p-4 sm:p-6 max-w-7xl w-full mx-auto flex-1 pb-10">
+        <main className="p-3 sm:p-6 max-w-7xl w-full mx-auto flex-1 pb-24 md:pb-10">
           <Routes>
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="consultas" element={<AdminConsultations />} />
@@ -774,6 +774,9 @@ function SecureAdminLayout({ user, handleLogout }: { user: SessionUser; handleLo
             <Route path="*" element={<Navigate to="dashboard" replace />} />
           </Routes>
         </main>
+
+        {/* Mobile Admin Bottom Navigation Bar */}
+        <BottomNav user={user} onOpenSidebar={() => setSidebarOpen(true)} />
       </div>
     </div>
   );
