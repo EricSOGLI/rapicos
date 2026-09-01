@@ -27,7 +27,7 @@ export default function BottomNav({ user, onOpenSidebar }: BottomNavProps) {
       const loans = dataService.getLoanRequests();
       setPendingLoansCount(loans.filter(l => l.status === 'pending' || l.status === 'under_review').length);
 
-      const msgs = dataService.getAllAdminMessages();
+      const msgs = (dataService as any).getAllAdminMessages ? (dataService as any).getAllAdminMessages() : [];
       setUnreadMessages(msgs.filter(m => !m.is_from_admin && !m.is_read).length);
 
       const notifs = dataService.getNotifications(user.id);

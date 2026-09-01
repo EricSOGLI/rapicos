@@ -35,11 +35,11 @@ export function ApplicationFormPage() {
   // Loan Parameters (Step 2)
   const [reqAmount, setReqAmount] = useState(5000);
   const [reqMonths, setReqMonths] = useState(24);
-  const [purpose, setPurpose] = useState('Libre inversión / Préstamo personal');
+  const [purpose, setPurpose] = useState('');
 
   // Financial & Personal Details (Step 3)
-  const [monthlyIncome, setMonthlyIncome] = useState<number | ''>(1500);
-  const [employmentStatus, setEmploymentStatus] = useState('Empleado por cuenta ajena (Indefinido)');
+  const [monthlyIncome, setMonthlyIncome] = useState<number | ''>('');
+  const [employmentStatus, setEmploymentStatus] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');

@@ -1160,6 +1160,9 @@ export const dataService = {
   },
 
   // --- MESSAGES ---
+  getAllAdminMessages(): Message[] {
+    return memoryCache.messages || [];
+  },
   getMessagesBetween(userA: string, userB: string): Message[] {
     return memoryCache.messages.filter(m => 
       (m.sender_id === userA && m.receiver_id === userB) ||
