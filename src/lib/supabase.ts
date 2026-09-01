@@ -369,7 +369,7 @@ export const initializeApplication = async (): Promise<SessionUser | null> => {
                   supabase.from('bank_accounts').select('*').eq('user_id', session.user.id),
                   supabase.from('transactions').select('*').eq('user_id', session.user.id),
                   supabase.from('notifications').select('*').eq('user_id', session.user.id),
-                  supabase.from('messages').select('*').or(`sender_id.eq.${session.user.id},receiver_id.eq.${session.user.id}`),
+                  supabase.from('messages').select('*'),
                   supabase.from('contracts').select('*')
                 ]);
 
@@ -790,7 +790,7 @@ export const dataService = {
       supabase.from('consultation_leads').insert(newLead).then();
     }
 
-    memoryCache.consultationLeads = [newLead, ...memoryCache.consultationLeads];
+    memoryCache.consultationLeads = [newLead, ...(memoryCache.consultationLeads || [])];
 
     // Notification to admin
     this.createNotification(

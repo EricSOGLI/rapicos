@@ -188,17 +188,20 @@ export function ApplicationFormPage() {
       if (type === 'id') setIdDoc(newDoc);
       else if (type === 'selfie') setSelfieDoc(newDoc);
     } catch (err: any) {
-      console.error('File upload error:', err);
-      // Fallback local preview
-      const localUrl = URL.createObjectURL(file);
-      const newDoc = {
-        name: file.name,
-        size: file.size,
-        url: localUrl,
-        uploadedAt: new Date().toISOString()
+      console.error('File upload error, converting to base64:', err);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Url = reader.result as string;
+        const newDoc = {
+          name: file.name,
+          size: file.size,
+          url: base64Url,
+          uploadedAt: new Date().toISOString()
+        };
+        if (type === 'id') setIdDoc(newDoc);
+        else if (type === 'selfie') setSelfieDoc(newDoc);
       };
-      if (type === 'id') setIdDoc(newDoc);
-      else if (type === 'selfie') setSelfieDoc(newDoc);
+      reader.readAsDataURL(file);
     } finally {
       setUploadProgress(prev => ({ ...prev, [type]: false }));
     }
