@@ -47,9 +47,10 @@ export function AdminMessengerHub() {
     e.preventDefault();
     if (!text.trim() || !activeUser) return;
 
-    dataService.sendMessage('user-admin-1', activeUser.id, text.trim(), true);
+    const newMsg = dataService.sendMessage('user-admin-1', activeUser.id, text.trim(), true);
     setText('');
-    fetchChatWithUser();
+    setMessages(prev => [...prev, newMsg]);
+    refreshConversations();
   };
 
   return (

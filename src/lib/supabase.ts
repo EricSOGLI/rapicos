@@ -1159,10 +1159,20 @@ export const dataService = {
     return memoryCache.messages || [];
   },
   getMessagesBetween(userA: string, userB: string): Message[] {
-    return memoryCache.messages.filter(m => 
-      (m.sender_id === userA && m.receiver_id === userB) ||
-      (m.sender_id === userB && m.receiver_id === userA)
-    ).sort((a,b) => a.created_at.localeCompare(b.created_at));
+    const isAdminTarget = userA === 'user-admin-1' || userB === 'user-admin-1';
+    const clientId = userA === 'user-admin-1' ? userB : userA;
+
+    return (memoryCache.messages || []).filter(m => {
+      if ((m.sender_id === userA && m.receiver_id === userB) || (m.sender_id === userB && m.receiver_id === userA)) {
+        return true;
+      }
+      if (isAdminTarget) {
+        if (m.sender_id === clientId || m.receiver_id === clientId) {
+          return true;
+        }
+      }
+      return false;
+    }).sort((a, b) => (a.created_at || '').localeCompare(b.created_at || ''));
   },
   getAllActiveConversationsAdmin(): { user: Profile; lastMessage: Message }[] {
     const msgs = memoryCache.messages || [];

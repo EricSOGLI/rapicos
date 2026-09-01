@@ -13,21 +13,26 @@ export function ClientMessengerPage({ user }: { user: SessionUser }) {
   const [text, setText] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const fetchChatMessages = async () => {
-    await initializeApplication();
+  const fetchChatMessages = () => {
     const list = dataService.getMessagesBetween(user.id, 'user-admin-1');
     setMessages(list);
   };
 
   useEffect(() => {
-    fetchChatMessages();
+    const init = async () => {
+      await initializeApplication();
+      fetchChatMessages();
+    };
+    init();
 
     const unsubscribe = realtimeService.subscribe(`chat_${user.id}_user-admin-1`, fetchChatMessages);
     const unsubscribeSupport = realtimeService.subscribe(`chat_user-admin-1_${user.id}`, fetchChatMessages);
+    const unsubscribeActivity = realtimeService.subscribe('chat_activity', fetchChatMessages);
 
     return () => {
       unsubscribe();
       unsubscribeSupport();
+      unsubscribeActivity();
     };
   }, [user.id]);
 
@@ -41,9 +46,9 @@ export function ClientMessengerPage({ user }: { user: SessionUser }) {
     e.preventDefault();
     if (!text.trim()) return;
 
-    dataService.sendMessage(user.id, 'user-admin-1', text.trim(), false);
+    const newMsg = dataService.sendMessage(user.id, 'user-admin-1', text.trim(), false);
     setText('');
-    fetchChatMessages();
+    setMessages(prev => [...prev, newMsg]);
   };
 
   return (
